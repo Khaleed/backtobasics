@@ -1,5 +1,4 @@
 package com.allendowney.thinkdast;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -36,32 +35,41 @@ public class MyArrayList<T> implements List<T> {
 		mal.add(1);
 		mal.add(2);
 		mal.add(3);
-		System.out.println(Arrays.toString(mal.toArray()) + " size = " + mal.size);
+//		System.out.println(Arrays.toString(mal.toArray()) + " size = " + mal.size);
 
 		mal.remove(new Integer(2));
-		System.out.println(Arrays.toString(mal.toArray()) + " size = " + mal.size);
+//		System.out.println(Arrays.toString(mal.toArray()) + " size = " + mal.size);
 	}
 
-	@Override
-	public boolean add(T element) {
-		// TODO: FILL THIS IN!
-		return false;
+	@Override public boolean add(T element) {
+		if(size >= array.length) {
+			// If there are no unused slots in the array, create a bigger Array.
+			T[] bigger = (T[]) new Object[array.length * 2];
+			// Copy over the elements.
+			System.arraycopy(array, 0, bigger, 0, array.length);
+			array = bigger;
+		}
+		array[size] = element;
+		size++;
+		return true;
 	}
 
+	// Inserts specified element at the specified position in this list
+	// by shifting the element currently at that position and those after
+	// to the right.
+	// [1, 2, 3] -> [1, 5, 2, 3]
 	@Override
 	public void add(int index, T element) {
-		if (index < 0 || index > size) {
+		if(index < 0 || index > size) {
 			throw new IndexOutOfBoundsException();
 		}
-		// add the element to get the resizing
-		add(element);
-
-		// shift the elements
-		for (int i=size-1; i>index; i--) {
-			array[i] = array[i-1];
+		add(element); // size = 4
+		// i = 3; 3 > 1
+		for(int i = size - 1; i > index; i--) {
+			// array[3] = array[2] -> [1, 2, 2, 3]
+			array[i] = array[i - 1];
 		}
-		// put the new one in the right place
-		array[index] = element;
+		array[index] = element; // [1, 5, 2, 3]
 	}
 
 	@Override
@@ -110,8 +118,12 @@ public class MyArrayList<T> implements List<T> {
 
 	@Override
 	public int indexOf(Object target) {
-		// TODO: FILL THIS IN!
-		return -1;
+        for(int i = 0; i < size; i++) {
+        	if(equals(target, array[i])) {
+        		return i;
+			}
+		}
+        return -1;
 	}
 
 	/** Checks whether an element of the array is the target.
@@ -179,10 +191,26 @@ public class MyArrayList<T> implements List<T> {
 		return true;
 	}
 
+	/**
+	 * Removes the element at the specified position in the list.
+	 * Shifts any subsequent elements to the left (subtracts one from their index).
+	 *
+	 * @param index
+	 * @return T The element that was removed from the list.
+	 */
 	@Override
-	public T remove(int index) {
-		// TODO: FILL THIS IN!
-		return null;
+	public T remove(int index) { // index = 2
+		if(index < 0 || index >= size) {
+			throw new IndexOutOfBoundsException();
+		}
+		T removedElement = get(index); // array[2] => 3
+		for (int i = size - 1; i > index; i--) { // i = 2,  2 > 2
+		    // Shift last element by subtracting index by 1.
+			// array[2 - 1] = array[2] -> 3 => [1, 3, null]
+			array[i - 1] = array[i]; // [1, 3, null]
+		}
+		size--;
+		return removedElement;
 	}
 
 	@Override
@@ -201,8 +229,11 @@ public class MyArrayList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		// TODO: FILL THIS IN!
-		return null;
+        if(index < 0 || index >= size) {
+        	throw new IndexOutOfBoundsException();
+		}
+        array[index] = element;
+        return array[index];
 	}
 
 	@Override

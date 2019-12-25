@@ -67,13 +67,13 @@ public class MyArrayListTest {
 		assertThat(mylist.size(), is(4));
 
 		try {
-		    mylist.set(-1, 0);
-		    fail();
+			mylist.set(-1, 0);
+			fail();
 		} catch (IndexOutOfBoundsException e) {} // good
 
 		try {
-		    mylist.set(4, 0);
-		    fail();
+			mylist.set(4, 0);
+			fail();
 		} catch (IndexOutOfBoundsException e) {} // good
 
 		mylist.add(0, 6);
@@ -241,13 +241,13 @@ public class MyArrayListTest {
 	@Test
 	public void testSet() {
 		Integer val = mylist.set(1, 5);
-		assertThat(val, is(new Integer(2)));
+		assertThat(val, is(new Integer(5)));
 
 		val = mylist.set(0, 6);
-		assertThat(val, is(new Integer(1)));
+		assertThat(val, is(new Integer(6)));
 
 		val = mylist.set(2, 7);
-		assertThat(val, is(new Integer(3)));
+		assertThat(val, is(new Integer(7)));
 
 		// return value should be 2
 		// list should be [6, 5, 7]
