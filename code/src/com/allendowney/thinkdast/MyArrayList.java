@@ -35,10 +35,10 @@ public class MyArrayList<T> implements List<T> {
 		mal.add(1);
 		mal.add(2);
 		mal.add(3);
-//		System.out.println(Arrays.toString(mal.toArray()) + " size = " + mal.size);
+		System.out.println(Arrays.toString(mal.toArray()) + " size = " + mal.size);
 
 		mal.remove(new Integer(2));
-//		System.out.println(Arrays.toString(mal.toArray()) + " size = " + mal.size);
+		System.out.println(Arrays.toString(mal.toArray()) + " size = " + mal.size);
 	}
 
 	@Override public boolean add(T element) {
@@ -183,7 +183,7 @@ public class MyArrayList<T> implements List<T> {
 
 	@Override
 	public boolean remove(Object obj) {
-		int index = indexOf(obj);
+		int index = indexOf(obj); // 0
 		if (index == -1) {
 			return false;
 		}
@@ -199,17 +199,15 @@ public class MyArrayList<T> implements List<T> {
 	 * @return T The element that was removed from the list.
 	 */
 	@Override
-	public T remove(int index) { // index = 2
+	public T remove(int index) {
 		if(index < 0 || index >= size) {
 			throw new IndexOutOfBoundsException();
 		}
-		T removedElement = get(index); // array[2] => 3
-		for (int i = size - 1; i > index; i--) { // i = 2,  2 > 2
-		    // Shift last element by subtracting index by 1.
-			// array[2 - 1] = array[2] -> 3 => [1, 3, null]
-			array[i - 1] = array[i]; // [1, 3, null]
+		T removedElement = get(index); // [1, 2, 3]
+		for (int i = index; i < size - 1; i++) { // i = 2; 2 < 2
+			array[i] = array[i + 1]; // array[1] = array[2] -> 3 --> [1, 3, 3]
 		}
-		size--;
+		size--; // [1, 3]
 		return removedElement;
 	}
 
