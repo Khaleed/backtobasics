@@ -101,10 +101,8 @@ public class MyLinkedList<E> implements List<E> {
 			// Pattern: for index other than 0, get the previous Node.
 			Node previous = getNode(index - 1); // {data: 1, next: {data: 2, ...}}
 			// And Point it's pointer to a newly created Node with element as its data
-			// and a new pointer pointing to the next node's next pointer.
-			Node newNode = previous.next;
-			// {data: 1, next: {data: 5, next: {data: 2, next: {data: 2, next: null }}}}
-			newNode = new Node(element, newNode);
+			// and pointer pointing to the next node.
+			previous.next = new Node(element, previous.next);
 		}
 		size++;
 	}
