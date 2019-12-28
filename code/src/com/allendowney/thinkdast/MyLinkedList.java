@@ -56,7 +56,7 @@ public class MyLinkedList<E> implements List<E> {
 	 */
 	public static void main(String[] args) {
 		// run a few simple tests
-		List<Integer> mll = new MyLinkedList<Integer>();
+		List<Integer> mll = new MyLinkedList<>();
 		mll.add(1);
 		mll.add(2);
 		mll.add(3);
@@ -80,9 +80,33 @@ public class MyLinkedList<E> implements List<E> {
 		return true;
 	}
 
+	/**
+	 * Adds element at the specified position in this list. Shifts the elements
+	 * currently at that position and any subsequent elements to the right.
+	 * @param index - index at which specified element is to be inserted.
+	 * @param element - element to be inserted.
+	 */
 	@Override
 	public void add(int index, E element) {
-		//TODO: FILL THIS IN!
+		/**
+		 * Example:
+		 *
+		 * add 5 at i = 1 -> [1, 2, 3] -> [1, 5, 2, 3]
+		 *                    0  1  2      0  1  2  3
+		 */
+		// Special case: If the given index is 0, create a new head.
+		if(index == 0) {
+			head = new Node(element, head); // {data: E, next: null}
+		} else {
+			// Pattern: for index other than 0, get the previous Node.
+			Node previous = getNode(index - 1); // {data: 1, next: {data: 2, ...}}
+			// And Point it's pointer to a newly created Node with element as its data
+			// and a new pointer pointing to the next node's next pointer.
+			Node newNode = previous.next;
+			// {data: 1, next: {data: 5, next: {data: 2, next: {data: 2, next: null }}}}
+			newNode = new Node(element, newNode);
+		}
+		size++;
 	}
 
 	@Override
@@ -141,10 +165,21 @@ public class MyLinkedList<E> implements List<E> {
 		return node;
 	}
 
+	/**
+	 * Returns the index of the target Object in the LinkedList.
+	 * @param target
+	 * @return
+	 */
 	@Override
 	public int indexOf(Object target) {
-		//TODO: FILL THIS IN!
-		return -1;
+		Node current = head;
+	    for(int i = 0; i < size; i++) {
+	    	if(equals(target, current.data)) {
+	    		return i;
+			}
+	    	current = current.next;
+		}
+	    return -1;
 	}
 
 	/** Checks whether an element of the array is the target.
@@ -206,10 +241,28 @@ public class MyLinkedList<E> implements List<E> {
 		return true;
 	}
 
+	/**
+	 * Removes the element at the specified position in this Linked list.
+	 * Shifts any subsequent element to the left.
+	 * Returns element that is removed from the list.
+	 *
+	 * @param index
+	 * @return element that is removed.
+	 */
 	@Override
 	public E remove(int index) {
-		//TODO: FILL THIS IN!
-		return null;
+	    E removed = get(index);
+	    // If index is 0, delete the head.
+		if(index == 0) {
+			// The next node becomes new head.
+			head = head.next;
+		} else {
+			// Get current node at this position and shift it to the left.
+			Node previous = getNode(index - 1);
+			previous.next = previous.next.next;
+		}
+		size--;
+		return removed;
 	}
 
 	@Override
