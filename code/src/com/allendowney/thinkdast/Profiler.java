@@ -38,7 +38,7 @@ public class Profiler extends ApplicationFrame {
 		/*
 		 * setup is invoked before the clock starts.
 		 */
-		public void setup(int n);
+		public void setup(int n); // Do something before the start of the clock.
 
 		/*
 		 * timeMe does whatever operation we are timing.
