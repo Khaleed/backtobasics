@@ -14,9 +14,9 @@ public class ProfileListAdd {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-//		profileArrayListAddEnd();
-//		profileArrayListAddBeginning();
-//		profileLinkedListAddBeginning();
+		profileArrayListAddEnd();
+		profileArrayListAddBeginning();
+		profileLinkedListAddBeginning();
 		profileLinkedListAddEnd();
 	}
 
